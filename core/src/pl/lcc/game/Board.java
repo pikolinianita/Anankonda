@@ -73,8 +73,6 @@ public class Board {
 
     public void contact(Ball ball) {
            if (inTargetArea(ball)) {
-              // int coarseX = coarseX(ball);
-              // int coarseY = coarseY(ball);
                if (ball.vY > 0) {
                   checkUp(ball);
                } else {
