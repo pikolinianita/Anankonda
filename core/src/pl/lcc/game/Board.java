@@ -73,24 +73,25 @@ public class Board {
 
     public void contact(Ball ball) {
            if (inTargetArea(ball)) {
-               int coarseX = coarseX(ball);
-               int coarseY = coarseY(ball);
+              // int coarseX = coarseX(ball);
+              // int coarseY = coarseY(ball);
                if (ball.vY > 0) {
-                  checkUp(ball, coarseX, coarseY);
+                  checkUp(ball);
                } else {
-                   checkDown(ball, coarseX, coarseY);
+                   checkDown(ball);
                }
                if (ball.vX > 0) {
-                   checkRight(ball, coarseX, coarseY);
+                   checkRight(ball);
                } else if (ball.vX < 0) {
-                   checkLeft(ball, coarseX, coarseY);
+                   checkLeft(ball);
                }
            }
 
     }
 
-    private void checkUp(Ball ball, int coarseX, int coarseY) {
-
+    private void checkUp(Ball ball) {
+        var coarseX = coarseX(ball.centerX());
+        var coarseY = coarseY(ball.top());
 
         if (board[coarseY][coarseX]!=null){
             ball.vY *= -1;
@@ -99,21 +100,27 @@ public class Board {
     }
 
 
-    private void checkDown(Ball ball, int coarseX, int coarseY) {
+    private void checkDown(Ball ball) {
+        var coarseX = coarseX(ball.centerX());
+        var coarseY = coarseY(ball.bottom());
         if (board[coarseY][coarseX]!=null){
             ball.vY *= -1;
             processHit(coarseY, coarseX);
         }
     }
 
-    private void checkRight(Ball ball, int coarseX, int coarseY) {
+    private void checkRight(Ball ball) {
+        var coarseX = coarseX(ball.right());
+        var coarseY = coarseY(ball.centerY());
 
         if (board[coarseY][coarseX]!=null){
             ball.vX *= -1;
             processHit(coarseY, coarseX);
         }
     }
-    private void checkLeft(Ball ball, int coarseX, int coarseY) {
+    private void checkLeft(Ball ball) {
+        var coarseX = coarseX(ball.left());
+        var coarseY = coarseY(ball.centerY());
         if (board[coarseY][coarseX]!=null){
             ball.vX *= -1;
             processHit(coarseY, coarseX);
@@ -125,12 +132,16 @@ public class Board {
         scoring.hit();
     }
 
-    private int coarseY(Ball ball) {
-        return (Konsts.boardY - ball.posY - Konsts.boardY0  )/Konsts.tileHeight;
+    private int coarseY(int y) {
+        var result =  (Konsts.boardY - y - Konsts.boardY0  )/Konsts.tileHeight;
+        if (result < 0) return 0;
+        return Math.min(result, Konsts.tileRows - 1);
     }
 
-    private int coarseX(Ball ball) {
-        return  (ball.posX - Konsts.boardX0)/Konsts.tileSizeX;
+    private int coarseX(int x) {
+        var result =  (x - Konsts.boardX0)/Konsts.tileSizeX;
+        if (result < 0) return 0;
+        return Math.min(result, Konsts.tileColumns - 1);
     }
 
     private boolean inTargetArea(Ball ball) {

@@ -59,6 +59,14 @@ public class Ball extends ArkDrawable{
         return posX+size;
     }
 
+    public int centerX(){
+        return posX + size/2;
+    }
+
+    public int centerY(){
+        return posY + size/2;
+    }
+
     private boolean isCeilingHit() {
         return posY > Konsts.boardY + Konsts.boardY0 - size;
     }
