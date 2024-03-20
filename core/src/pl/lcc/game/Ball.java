@@ -16,7 +16,7 @@ public class Ball extends ArkDrawable{
         super(batch, texture, x, y);
         vX = Konsts.ballVX0;
         vY = Konsts.ballVY0;
-        size = 20;
+        size = 21;
         this.texture = texture;
         this.scoring = scoring;
     }
