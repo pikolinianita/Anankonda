@@ -6,13 +6,16 @@ public class Konsts {
         WIN, LOST, GAME
     }
 
-    //Initial ball setup: starting point and velocities,
-    public static int ballStartX = 200;
-    public static int ballStartY = 200;
+    public static class Ball{
 
-    //starting ball velocities
-    public static int ballVY0 = 3;
-    public static int ballVX0 = 3;
+        //Initial ball setup: starting point and velocities,
+        public static int startX = 200;
+        public static int startY = 200;
+        //starting ball velocities
+        public static int vY0 = 3;
+        public static int vX0 = 3;
+        public static int size = 20;
+    }
 
     //size of playground
     public static int boardX =  1000;

@@ -14,9 +14,9 @@ public class Ball extends ArkDrawable{
 
     public Ball(SpriteBatch batch, Texture texture, int x, int y, Scoring scoring) {
         super(batch, texture, x, y);
-        vX = Konsts.ballVX0;
-        vY = Konsts.ballVY0;
-        size = 21;
+        vX = Konsts.Ball.vX0;
+        vY = Konsts.Ball.vY0;
+        size = Konsts.Ball.size;
         this.texture = texture;
         this.scoring = scoring;
     }
@@ -27,14 +27,14 @@ public class Ball extends ArkDrawable{
 
     public void move() {
         if (!scoring.isFinished()) {
-            if (posX < Konsts.boardX0 || posX > Konsts.boardX + Konsts.boardX0 - size) {
+            if (isSideHit()) {
                 vX *= -1;
             }
-            if (posY < Konsts.boardY0) {
+            if (hasBallFallenThrough()) {
                 scoring.gameLost();
-                System.out.println("End End End");
+                System.out.println("This is The End, my friend");
             }
-            else if (posY > Konsts.boardY + Konsts.boardY0 - size) {
+            else if (isCeilingHit()) {
                 if (vY > 0) {
                     vY *= -1;
                 }
@@ -42,6 +42,33 @@ public class Ball extends ArkDrawable{
             posX += vX;
             posY += vY;
         }
+    }
+
+    public int top(){
+        return posY + size;
+    }
+
+    public int bottom(){
+        return posY;
+    }
+
+    public int left(){
+        return posX;
+    }
+    public int right(){
+        return posX+size;
+    }
+
+    private boolean isCeilingHit() {
+        return posY > Konsts.boardY + Konsts.boardY0 - size;
+    }
+
+    private boolean hasBallFallenThrough() {
+        return posY < Konsts.boardY0;
+    }
+
+    private boolean isSideHit() {
+        return posX < Konsts.boardX0 || posX > Konsts.boardX + Konsts.boardX0 - size;
     }
 
     public void dispose(){

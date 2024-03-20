@@ -12,10 +12,10 @@ public class Board {
 
     Tile[][] board;
 
-    public Board(Tile[][] board, int rows, int cols, Scoring scoring) {
+    public Board(Tile[][] board, Scoring scoring) {
         this.board = board;
-        this.cols = cols;
-        this.rows = rows;
+        this.cols = Konsts.tileColumns;
+        this.rows = Konsts.tileRows;
         this.scoring = scoring;
     }
 
@@ -27,12 +27,13 @@ public class Board {
        int score = 0;
        for (int r = 0;  r<rows; r++){
            for(int c = 0; c<cols; c++){
+               score++;
                loc_board[r][c] = new Tile(batch, texture,
                        c*Konsts.tileSizeX + Konsts.boardX0,
                        Konsts.boardY0+ Konsts.boardY - (r+1)*Konsts.tileHeight);
            }
        }
-       return  new Board(loc_board, rows, cols, scoring.setScore(score));
+       return new Board(loc_board, scoring.setScore(score));
     }
 
     public static Board lvl2(SpriteBatch batch, Scoring scoring){
@@ -40,7 +41,6 @@ public class Board {
         int cols = Konsts.tileColumns;
         Texture texture = new Texture("bar3.png");
         var loc_board = new Tile[rows][cols];
-
         int score = 0;
         for (int r = 0;  r<rows; r++){
             for(int c = 0; c<cols; c++){
@@ -52,15 +52,21 @@ public class Board {
             }}
         }
 
-        return new Board(loc_board, rows, cols,scoring.setScore(score));
+        return new Board(loc_board,scoring.setScore(score));
     }
 
-    public void draw(){
+    public void draw() {
+        forEachTile((r, c) -> {
+            if (board[r][c] != null) {
+                board[r][c].draw(Konsts.tileSizeX, Konsts.tileSizeY);
+            }
+        });
+    }
+
+    private void forEachTile(IntBiConsumer consumer) {
         for (int r = 0;  r<rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if(board[r][c]!=null){
-                    board[r][c].draw(Konsts.tileSizeX,Konsts.tileSizeY);
-                }
+            for (int c = 0; c < cols; c++){
+                consumer.process(r,c);
             }
         }
     }
@@ -84,6 +90,8 @@ public class Board {
     }
 
     private void checkUp(Ball ball, int coarseX, int coarseY) {
+
+
         if (board[coarseY][coarseX]!=null){
             ball.vY *= -1;
             processHit(coarseY, coarseX);
@@ -126,7 +134,7 @@ public class Board {
     }
 
     private boolean inTargetArea(Ball ball) {
-        return ball.posY > ( Konsts.boardY0+ Konsts.boardY - Konsts.tileRows*Konsts.tileHeight);
+        return ball.posY > ( Konsts.boardY0 + Konsts.boardY - Konsts.tileRows*Konsts.tileHeight)  ;
     }
 
     public void dispose(){

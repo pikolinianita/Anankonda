@@ -34,7 +34,7 @@ public class Paddle extends ArkDrawable {
     public void contact(Ball ball) {
         if(ball.posY < posY + sizeY){
             if(ball.posX + ball.size > posX && ball.posX < posX + sizeX){
-                ball.vY = Konsts.ballVY0;
+                ball.vY = Konsts.Ball.vY0;
                 ball.vX = ((ball.posX - posX)-sizeX/2) /5;
             }
         }

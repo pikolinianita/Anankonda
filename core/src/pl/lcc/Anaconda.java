@@ -24,7 +24,7 @@ public class Anaconda extends ApplicationAdapter {
 		scoring = new Scoring();
 		this.surround = new Surround(batch, scoring);
 		this.paddle = new Paddle(batch, new Texture("bar3.png"), 0, 0);
-		this.ball = new Ball(batch, new Texture("ball.png"), Konsts.ballStartX, Konsts.ballStartY, scoring);
+		this.ball = new Ball(batch, new Texture("ball.png"), Konsts.Ball.startX, Konsts.Ball.startY, scoring);
 		this.board = Board.lvl2(batch, scoring);
 	}
 
