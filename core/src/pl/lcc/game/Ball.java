@@ -9,7 +9,6 @@ public class Ball extends ArkDrawable{
     private final Scoring scoring;
     int vX;
     int vY;
-    boolean finished = false;
 
     Texture texture;
 
@@ -18,7 +17,6 @@ public class Ball extends ArkDrawable{
         vX = Konsts.ballVX0;
         vY = Konsts.ballVY0;
         size = 20;
-        finished = false;
         this.texture = texture;
         this.scoring = scoring;
     }
